@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问题回答</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .question-container {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: inline-block;
+            width: 100%;
+        }
+        .question {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        input {
+            padding: 8px;
+            width: 200px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="questions">
+        <div class="question-container">
+            <div class="question">您能原谅我吗?</div>
+            <div class="input-group">
+                <input type="text" class="answer-input" placeholder="(Yes/Next question)">
+                <button onclick="checkAnswer(this)">提交</button>
+            </div>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer(button) {
+            // 获取输入框和结果元素
+            const inputElement = button.previousElementSibling;
+            const resultElement = button.parentElement.nextElementSibling;
+            const answer = inputElement.value.trim();
+            
+            if (answer === 'Next question') {
+                
+                
+                // 创建新问题
+                const newQuestion = document.createElement('div');
+                newQuestion.className = 'question-container';
+                newQuestion.innerHTML = `
+                    <div class="question">您能原谅我吗?</div>
+                    <div class="input-group">
+                        <input type="text" class="answer-input" placeholder="(Yes/Next question)">
+                        <button onclick="checkAnswer(this)">提交</button>
+                    </div>
+                    <div class="result"></div>
+                `;
+                
+                // 将新问题添加到页面
+                document.getElementById('questions').appendChild(newQuestion);
+                
+                // 清空当前输入框
+                inputElement.value = '';
+            } 
+            else if (answer === 'Yes') {
+                resultElement.textContent = '我就知道，妈妈你对我最好了!!![开心.jpg]';
+            } 
+            else {
+                resultElement.textContent = '可以好好回答问题吗!?!😡';
+            }
+
+            // 自动滚动到当前问题
+            button.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
